@@ -1,0 +1,340 @@
+{
+    "openapi" : "2.0.0",
+    "info" : {
+        "title" : "User Api",
+        "description" : "User Api",
+        "version" : "v1.0.1"
+    },
+    "servers" : [
+        {
+            "url" : "http://localhost:8000"
+        }
+    ],
+    "paths" : {
+        "/api/users/admin" : {
+            "post": {
+                "description" : "create new user as admin",
+                "requestBody" : {
+                    "content" : {
+                        "application/json" : {
+                            "type" : "object",
+                            "properties" : {
+                                "name" : {
+                                    "type" : "string"
+                                },
+                                "username" : {
+                                    "type" : "string"
+                                },
+                                "password" : {
+                                    "type" : "string"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses" : {
+                    "201" : {
+                        "content" : {
+                            "application/json" : {
+                                "type" : "object",
+                                "examples" : {
+                                    "success" : {
+                                        "description" : "Success create new admin",
+                                        "value" : {
+                                            "data": {
+                                                "id" : 1,
+                                                "name" : "Jhon Doe",
+                                                "username": "jhondoe",
+                                                "is_admin" : true
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400" : {
+                        "content" : {
+                            "application/json" : {
+                                "examples" : {
+                                    "error" : "Failed to save"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/users/member" : {
+            "post": {
+                "description" : "create new user as member",
+                "requestBody" : {
+                    "content" : {
+                        "application/json" : {
+                            "schema" : {
+                                "type" : "object",
+                                "properties" : {
+                                    "name" : {
+                                        "type" : "string"
+                                    },
+                                    "username" : {
+                                        "type" : "string"
+                                    },
+                                    "password" : {
+                                        "type" : "string"
+                                    },
+                                    "is_admin" : {
+                                        "type" : false
+                                    }
+                            }
+                            }
+                        }
+                    }
+                },
+                "responses" : {
+                    "201" : {
+                        "content" : {
+                            "application/json" : {
+                                "type" : "object",
+                                "examples" : {
+                                    "success" : {
+                                        "description" : "Success create new member",
+                                        "value" : {
+                                            "data": {
+                                                "id" : 1,
+                                                "name" : "Jhon Doe",
+                                                "username": "jhondoe",
+                                                "is_admin" : false
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400" : {
+                        "content" : {
+                            "application/json" : {
+                                "examples" : {
+                                    "error" : "Failed to save"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/users/login" : {
+            "post": {
+                "description" : "Login user",
+                "requestBody" : {
+                    "content" : {
+                        "application/json" : {
+                           "schema" : {
+                                "type" : "object",
+                                "properties" : {
+                                    "username" : {
+                                        "type" : "string"
+                                    },
+                                    "password" : {
+                                        "type" : "string"
+                                    }
+                                }
+                           }
+                        }
+                    }
+                },
+                "responses" : {
+                    "200" : {
+                        "content" : {
+                            "application/json" : {
+                                "type" : "object",
+                                "examples" : {
+                                    "success" : {
+                                        "description" : "Success create new member",
+                                        "value" : {
+                                            "data": {
+                                                "id" : 1,
+                                                "name" : "Jhon Doe",
+                                                "username": "jhondoe",
+                                                "token" : "xyzjhfshfrtwetrwerrweoriuower",
+                                                "is_admin" : false
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400" : {
+                        "content" : {
+                            "application/json" : {
+                                "examples" : {
+                                    "error" : "Username or password wrong"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/users/current" : {
+            "get": {
+                "description" : "get profile user",
+                "parameters" : {
+                    "name" : "authorization",
+                    "in" : "headers"
+                },
+                "responses" : {
+                    "200" : {
+                        "content" : {
+                            "application/json" : {
+                                "type" : "object",
+                                "examples" : {
+                                    "success" : {
+                                        "description" : "Succes fetch single user",
+                                        "value" : {
+                                            "data": {
+                                                "id" : 1,
+                                                "name" : "Jhon Doe",
+                                                "username": "jhondoe",
+                                                "token" : "xyzjhfshfrtwetrwerrweoriuower",
+                                                "is_admin" : false
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/users/edit/{id}" : {
+            "put" : {
+                "description" : "Update user",
+                "requestBody" : {
+                    "content" : {
+                        "application/json" : {
+                            "schema" : {
+                                "type" : "object",
+                                "properties" : {
+                                    "name" :{
+                                        "type": "string"
+                                    },
+                                    "username" : {
+                                        "type" : "string"
+                                    },
+                                    "password" : {
+                                        "type" : "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses" : {
+                    "200" : {
+                        "content" : {
+                            "application/json" : {
+                                "type" : "object",
+                                "examples" : {
+                                    "success" : {
+                                        "description" : "Success update user",
+                                        "value" : {
+                                            "data": {
+                                                "id" : 1,
+                                                "name" : "Jhon Doe",
+                                                "username": "jhondoe"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400" : {
+                        "content" : {
+                            "application/json" : {
+                                "examples" : {
+                                    "error" : "Failed to update"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/users/delete/{id}" : {
+            "delete" : {
+                "description" : "description",
+                "requestBody" : {
+                    "content" : {
+                        "application/json" : {
+                            "schema" : {
+                                "type" : "object"
+                            }
+                        }
+                    }
+                },
+                "responses" : {
+                    "200" : {
+                        "content": {
+                            "application/json" : {
+                                "example" : {
+                                    "data" : null,
+                                    "error" : {}
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/users" : {
+            "get": {
+                "description" : "Get all users",
+                "responses" : {
+                    "200" : {
+                        "content" : {
+                            "application/json" : {
+                                "type" : "object",
+                                "examples" : {
+                                    "success" : {
+                                        "description" : "Success fetch data all users",
+                                        "value" : {
+                                            "data":[
+                                                {
+                                                    "id" : 1,
+                                                    "name" : "Jhon Doe",
+                                                    "username": "jhondoe",
+                                                    "is_admin" : true
+                                                },
+                                                {
+                                                    "id" : 2,
+                                                    "name" : "Alice",
+                                                    "username": "Alice",
+                                                    "is_admin" : false
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500" : {
+                        "content" : {
+                            "application/json" : {
+                                "examples" : {
+                                    "error" : "internal serv"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}
