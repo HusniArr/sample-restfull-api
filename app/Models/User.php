@@ -12,6 +12,7 @@ class User extends Model
     protected $table = 'users';
     protected $primaryKey = 'id';
     protected $keyType = 'int';
-    protected $timestamps = true;
-    protected $incrementing = true;
+    public $timestamps = true;
+    public $incrementing = true;
+    protected $fillable = ['name', 'username', 'password'];
 }

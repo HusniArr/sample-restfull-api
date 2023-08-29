@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('username', 100)->nullable(false)->unique('users_username_unique');
             $table->string('password', 100)->nullable(false);
             $table->string('token', 200)->nullable()->unique('users_token_unique');
-            $table->string('is_admin')->default(true);
+            $table->boolean('is_admin')->default(1);
             $table->timestamps();
         });
     }

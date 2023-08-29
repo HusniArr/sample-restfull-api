@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\UserController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -14,6 +14,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
+Route::get('/messages', function() {
+    $data = [
+        "status" => true,
+        "message" => "welcome to message"
+    ];
+    $headers = [
+        "Content-Type" => "application/json"
+    ];
+    return response()->json($data, 200, $headers);
 });
+
+Route::post('/users/register/members',[UserController::class, 'register_member']);
