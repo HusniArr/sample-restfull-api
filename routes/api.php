@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\ApiAuthMiddleware;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
@@ -31,3 +32,7 @@ Route::get('/messages', function() {
 Route::post('/users/register',[UserController::class, 'register']);
 Route::post('/users/register/admin',[UserController::class, 'register_admin']);
 Route::post('/users/login', [UserController::class, 'login']);
+
+Route::middleware(ApiAuthMiddleware::class)->group(function(){
+    Route::get('/users/current', [UserController::class, 'get']);
+});
