@@ -259,13 +259,16 @@ class UserTest extends TestCase
     public function testLogoutSuccess()
     {
         $this->seed([UserSeeder::class]);
-        $response= $this->delete('/api/users/logout',[
+        $response= $this->delete('/api/users/logout',[],headers:[
             'authorization' => 'test'
         ]);
         $response->assertStatus(200)
         ->assertJson([
             'success' => true
         ]);
+
+        $user = User::where('username', 'test')->first();
+        self::assertNull($user->token);
     }
 
     public function testLogoutFailed()
