@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UserLoginRequest;
+use App\Http\Requests\UserUpdateRequest;
 use App\Models\User;
 use App\Http\Requests\UserRegisterRequest;
 use App\Http\Resources\UserResource;
@@ -12,6 +13,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Str;
+use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends Controller
 {
@@ -87,5 +89,33 @@ class UserController extends Controller
     {
         $user = Auth::user();
         return new UserResource($user);
+    }
+
+    public function update(UserUpdateRequest $request) : UserResource
+    {
+        $data = $request->validated();
+        $user = Auth::user();
+
+        if(isset($data['name'])) {
+            $user->name = $data['name'];
+        }
+
+        if(isset($data['password'])) {
+            $user->password = Hash::make($data['password']);
+        }
+
+        $user->save();
+        return new UserResource($user);
+    }
+
+    public function logout(Request $request) : Response
+    {
+        $user = Auth::user();
+        $user->token = null;
+        $user->save();
+
+        return response()->json([
+            'success' => true
+        ])->setStatusCode(200);
     }
 }
